@@ -1,14 +1,23 @@
 import React, { useRef, useState } from 'react'
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import {auth} from "../utils/firebase"
 
 import Headers from './Headers'
 import {HandleForm} from "../utils/validation"
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { addUser } from '../utils/userSlice';
 
 const Login = () => {
+  
     const[signUser,setSignUser]=useState(true)
     const[message,setMessage]=useState(null)
     const email=useRef(null)
     const password=useRef(null)
     const fullname=useRef(null)
+    const dispatch=useDispatch()
+    const navigate=useNavigate()
     const Togglesign=()=>{
         setSignUser(!signUser)
 
@@ -17,6 +26,73 @@ const Login = () => {
         const message=HandleForm(email.current.value,password.current.value,signUser,  !signUser ? fullname.current.value : null)
         console.log(message);
         setMessage(message)
+
+        if(message) return
+
+        if(!signUser){
+          createUserWithEmailAndPassword(auth, email.current.value, password.current.value)
+  .then((userCredential) => {
+
+    // Signed up 
+    const user = userCredential.user;
+    updateProfile(user, {
+      displayName: "Rishwan K", photoURL: "https://avatars.githubusercontent.com/u/152471392?v=4"
+    }).then(() => {
+      // Profile updated!
+      navigate("/browse")
+      // ...
+    }).catch((error) => {
+      // An error occurred
+      // ...
+      setMessage(error.message)
+    });
+   
+  
+    
+    // ...
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    setMessage(errorCode + " "+ errorMessage)
+    // ..
+  });
+   }else{
+          signInWithEmailAndPassword(auth, email.current.value, password.current.value)
+  .then((userCredential) => {
+    // Signed in 
+    const user = userCredential.user;
+    updateProfile(user, {
+      displayName: fullname.current.value, photoURL: "https://avatars.githubusercontent.com/u/152471392?v=4"
+    }).then(() => {
+      // Profile updated!
+      const{uid,email,displayName,photoURL}=auth.currentUser
+      dispatch(addUser({
+        uid:uid,
+        email:email,
+        displayName:displayName,
+        photoURL:photoURL
+        
+
+      }))
+      navigate("/browse")
+      // ...
+    }).catch((error) => {
+      // An error occurred
+      setMessage(error.message)
+      // ...
+    });
+ 
+    
+    // ...
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    setMessage(errorCode + " "+ errorMessage)
+  });
+
+        }
         
 
 
