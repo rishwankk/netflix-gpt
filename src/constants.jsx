@@ -20,3 +20,4 @@ export const API_NOW_PLAYING = {
   },
 };
 
+export const IMG_URL="https://image.tmdb.org/t/p/w780"

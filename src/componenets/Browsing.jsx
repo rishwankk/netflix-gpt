@@ -6,6 +6,9 @@ import MainCont from './MainCont'
 import SecondaryCont from './SecondaryCont'
 import useNowPlayingVideo from '../hooks/useNowPlayingVideo'
 import { useSelector } from 'react-redux'
+import usePopularMovie from '../hooks/usePopularMovie'
+import useTopRatedMovie from '../hooks/useTopRatedMovie'
+import useUpcomingMovie from '../hooks/useUpcomingMovie'
 
 const Browsing = () => {
   
@@ -14,6 +17,9 @@ const Browsing = () => {
 
   
     useNowPlayingMovie()
+    usePopularMovie()
+    useTopRatedMovie()
+    useUpcomingMovie()
   
     
  
