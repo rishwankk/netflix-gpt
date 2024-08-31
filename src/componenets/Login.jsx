@@ -8,6 +8,7 @@ import {HandleForm} from "../utils/validation"
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { addUser } from '../utils/userSlice';
+import { USER_AVATAR } from '../constants';
 
 const Login = () => {
   
@@ -36,10 +37,10 @@ const Login = () => {
     // Signed up 
     const user = userCredential.user;
     updateProfile(user, {
-      displayName: "Rishwan K", photoURL: "https://avatars.githubusercontent.com/u/152471392?v=4"
+      displayName: "Rishwan K", photoURL: USER_AVATAR
     }).then(() => {
       // Profile updated!
-      navigate("/browse")
+     
       // ...
     }).catch((error) => {
       // An error occurred
@@ -75,7 +76,7 @@ const Login = () => {
         
 
       }))
-      navigate("/browse")
+      
       // ...
     }).catch((error) => {
       // An error occurred
