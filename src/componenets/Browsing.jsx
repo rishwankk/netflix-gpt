@@ -9,8 +9,13 @@ import { useSelector } from 'react-redux'
 import usePopularMovie from '../hooks/usePopularMovie'
 import useTopRatedMovie from '../hooks/useTopRatedMovie'
 import useUpcomingMovie from '../hooks/useUpcomingMovie'
+import GptSearch from './GptSearch'
 
 const Browsing = () => {
+
+  const showGptSearch=useSelector((store)=>store.gpt?.showGptSlice)
+
+  
   
 
   
@@ -26,8 +31,15 @@ const Browsing = () => {
   return (
     <div className="">
       <Headers />
+      {!showGptSearch?
+      <>
       <MainCont />
       <SecondaryCont />
+      </>
+      
+      :<GptSearch />}
+
+  
 
       
     </div>

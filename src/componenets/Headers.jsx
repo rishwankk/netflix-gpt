@@ -4,13 +4,20 @@ import { auth } from '../utils/firebase';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { addUser, removeUser } from '../utils/userSlice';
-import { LOGO } from '../constants';
+import { LOGO, SUPPORTED_LANGUAGES } from '../constants';
+import GptSearch from './GptSearch';
+import { toggeleGptSearchView } from '../utils/gptSlice';
+import { changeLanguage } from '../utils/configSlice';
 
 
 const Headers = () => {
+  
   const [showDropdown, setShowDropdown] = useState(false);
   const dispatch=useDispatch()
   const user=useSelector(store=>store.user)
+  const lang=useSelector((store)=>store.gpt?.showGptSlice)
+  console.log("lang",lang);
+  
   const navigate=useNavigate()
   const handleSignout=()=>{
     signOut(auth).then(() => {
@@ -48,11 +55,28 @@ const Headers = () => {
   const handleUser = () => {
     setShowDropdown(!showDropdown); 
   };
+  const handleGptSearch=()=>{
+    dispatch(toggeleGptSearchView())
+   
+
+  }
+
+const  handleLanguage=(e)=>{
+dispatch(changeLanguage(e.target.value))
+
+
+  }
   return (
     <div className='absolute w-screen bg-gradient-to-b from-black px-8 py-5 z-50  flex justify-between'>
         <img className=' w-44 ' src={LOGO} alt="logo-main" />
 
         {user && (<div className="flex justify-end items-center  ">
+          {lang &&
+          <select name="" id="" className='rounded-lg opacity-25' onChange={handleLanguage}>
+            {  SUPPORTED_LANGUAGES.map((lang)=> <option key={lang.identifire} className='' value={lang.identifire}>{lang.language}</option>)}
+          </select>
+}
+          <button className='bg-purple-800 m-5 rounded-lg mx-14 ' onClick={handleGptSearch}>GPT Search</button>
        
        <img  className='w-10 rounded-full'  src={user.photoURL} alt=""  onMouseEnter={handleUser}/>
        {showDropdown && (
