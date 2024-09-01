@@ -6,13 +6,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addUser, removeUser } from '../utils/userSlice';
 import { LOGO, SUPPORTED_LANGUAGES } from '../constants';
 import GptSearch from './GptSearch';
-import { toggeleGptSearchView } from '../utils/gptSlice';
+import { clearSlice, toggeleGptSearchView } from '../utils/gptSlice';
 import { changeLanguage } from '../utils/configSlice';
 
 
 const Headers = () => {
   
   const [showDropdown, setShowDropdown] = useState(false);
+  const[showGpt,setGpt]=useState(true)
+
   const dispatch=useDispatch()
   const user=useSelector(store=>store.user)
   const lang=useSelector((store)=>store.gpt?.showGptSlice)
@@ -57,6 +59,8 @@ const Headers = () => {
   };
   const handleGptSearch=()=>{
     dispatch(toggeleGptSearchView())
+    dispatch(clearSlice());
+    setGpt(!showGpt)
    
 
   }
@@ -66,6 +70,8 @@ dispatch(changeLanguage(e.target.value))
 
 
   }
+
+ 
   return (
     <div className='absolute w-screen bg-gradient-to-b from-black px-8 py-5 z-50  flex justify-between'>
         <img className=' w-44 ' src={LOGO} alt="logo-main" />
@@ -76,7 +82,7 @@ dispatch(changeLanguage(e.target.value))
             {  SUPPORTED_LANGUAGES.map((lang)=> <option key={lang.identifire} className='' value={lang.identifire}>{lang.language}</option>)}
           </select>
 }
-          <button className='bg-purple-800 m-5 rounded-lg mx-14 ' onClick={handleGptSearch}>GPT Search</button>
+          <button className='bg-purple-800 m-5 rounded-md mx-14  h-8' onClick={handleGptSearch}>{showGpt ?"GPT Search": "Home Page"}</button>
        
        <img  className='w-10 rounded-full'  src={user.photoURL} alt=""  onMouseEnter={handleUser}/>
        {showDropdown && (

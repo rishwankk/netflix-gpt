@@ -3,6 +3,7 @@ import {  IMG_URL } from '../constants'
 
 
 const MovieCard = ({poster_path}) => {
+  if(!poster_path)return null
   
     
   return (

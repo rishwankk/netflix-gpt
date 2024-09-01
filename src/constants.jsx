@@ -20,7 +20,7 @@ export const API_NOW_PLAYING = {
   headers: {
     accept: "application/json",
     Authorization:
-      "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3MDVlNDNjMDgzYjRlZDY2ZmI3NTAwZmYzZTI1NTY4NSIsIm5iZiI6MTcyNTA0NzcyNy44MjkxMDMsInN1YiI6IjY2ZDFmNDE5ZGM3YmU4ZjM4NTBmZDkyYiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.CDDQgp_ZHFJOSJ_ZNXDKtOav2Bq9T0-wICln-fp6a2g",
+      process.env.REACT_APP_TMDB_API,
   },
 };
 
@@ -31,3 +31,6 @@ export const SUPPORTED_LANGUAGES=[
   {identifire:"ml",language:"Malayalam" },
   {identifire:"hindi",language:"Hindi" }
 ]
+
+
+export const GEMINI_API= process.env.REACT_APP_GEMINI_API_KEY
