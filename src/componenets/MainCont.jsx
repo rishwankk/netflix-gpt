@@ -24,7 +24,7 @@ const MainCont = () => {
     
     
   return (
-    <div>
+    <div className='pt-[30%] bg-black md:pt-0 md:bg-current'>
 
         <VideoTitle title={original_title} overview={overview} />
         <VideoBackground Movie_Id={id} />

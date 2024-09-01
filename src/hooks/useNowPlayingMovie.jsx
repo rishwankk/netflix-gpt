@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react'
 import { API_MOVIE } from '../constants'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { addNowPlayingMovie } from '../utils/moveiSlice'
 
 const useNowPlayingMovie = () => {
     const dispatch=useDispatch()
+    const nowPlayingMovies = useSelector((state) => state.movies.nowPlayingMovies)
 
   
 
@@ -16,7 +17,8 @@ const useNowPlayingMovie = () => {
         
     }
     useEffect(()=>{
-        handleNowPlaying()
+        {!nowPlayingMovies && handleNowPlaying()}
+       
 
     },[])
 

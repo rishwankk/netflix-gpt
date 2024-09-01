@@ -11,8 +11,7 @@ import { API_MOVIE } from '../constants'
 
 const GptSearchBar = () => {
   const dispatch=useDispatch()
-  console.log("this",Gemini);
-  console.log("helloooo");
+ 
   
   
   const searchText=useRef(null)
@@ -32,7 +31,7 @@ const GptSearchBar = () => {
     
 
    
-      console.log(searchText.current.value);
+    
       const searchQuery=`Act as a movie recomandation system and suggest some movies for the query :${searchText.current.value} .only give me name of five movies ,coma separated like the example result is given ahead . Example Karyasthan, Puthiya mugham,Chennai express, Body guard,Run way`
 
       const model=Gemini.getGenerativeModel({model:"gemini-pro"})
@@ -40,8 +39,7 @@ const GptSearchBar = () => {
       const result=await model.generateContent(prompt)
       const response=await result.response;
       const movie=response?.candidates[0]?.content?.parts[0]?.text.split(",");
-      console.log(movie);
-      
+    
       const promiseArray=movie.map((mov)=>handleMovieSearch(mov))
       const finalResult=await Promise.all(promiseArray)
     
@@ -63,8 +61,8 @@ const GptSearchBar = () => {
 
     
   return (
-    <div className='pt-[10%]  flex justify-center'>
-        <form action="" className=' w-1/2 bg-black grid grid-cols-12 rounded-lg' onSubmit={(e)=>e.preventDefault()}>
+    <div className=' pt-[50%] md:pt-[10%]  flex justify-center'>
+        <form action="" className=' w-screen md:w-1/2 bg-black grid grid-cols-12 rounded-lg' onSubmit={(e)=>e.preventDefault()}>
             <input ref={searchText} className='p-4 m-4 col-span-9' type="text" placeholder={language[selectedLang].gptSearchPlaceholder} />
         <button className='py-2 px-2 m-5 bg-red-800 col-span-3 rounded-lg' onClick={handleSearchText}>{language[selectedLang].search}</button>
         </form>

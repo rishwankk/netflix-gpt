@@ -25,7 +25,7 @@ const Login = () => {
     }
     const SubmitForm=()=>{
         const message=HandleForm(email.current.value,password.current.value,signUser,  !signUser ? fullname.current.value : null)
-        console.log(message);
+       
         setMessage(message)
 
         if(message) return
@@ -99,14 +99,14 @@ const Login = () => {
 
     }
   return (
-      <div >
+      <div className='' >
    
      <Headers />
      <div className='absolute'>
-<img src={BG_IMAGE} alt="body" />
+<img className='h-screen object-cover w-screen' src={BG_IMAGE} alt="body" />
 
      </div>
-       <form onSubmit={(e)=>e.preventDefault()} className='absolute bg-black p-12 w-3/12  my-36 mx-auto right-0 left-0 opacity-80 text-white rounded-lg'>
+       <form onSubmit={(e)=>e.preventDefault()} className='absolute bg-black p-12 w-full md:w-3/12  my-36 mx-auto right-0 left-0 opacity-80 text-white rounded-lg'>
        <h1 className='text-white font-bold'>{signUser?"Sign In":"Sign Up"}</h1>
        <p className='text-red-700 text-center'>{message}</p>
        {!signUser && <input ref={fullname} type="text" placeholder='Name' className='p-2 m-2 w-full bg-slate-500' />}
